@@ -1,0 +1,28 @@
+<IfModule autoindex>
+  IndexIgnore *
+</IfModule>
+
+Options -Indexes
+RewriteOptions inherit
+#RewriteEngine On
+
+#RewriteBase /counter/
+#RewriteCond %{HTTPS} !on
+#RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+#RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+#RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+#RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php 
+  
+  RewriteCond %{REQUEST_URI} resultravels
+  RewriteRule ^([a-zA-Z0-9_-]+)-([a-zA-Z0-9_-]+)$ index.php?view=$1&info=$2 [L]
+  #RewriteRule ^([a-zA-Z0-9_-]+)-([a-zA-Z0-9_-]+)-([a-zA-Z0-9_-]+)$ index.php?view=$1&prov=$2&other=$3 [L]
+
+  RewriteRule ^([a-zA-Z0-9_-]+)-([a-zA-Z0-9_-]+)$ index.php?view=$1&visit=$2 [L]
+
+  RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?view=$1 [L]
